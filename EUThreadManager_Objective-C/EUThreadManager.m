@@ -47,21 +47,16 @@
         task();
         dispatch_async(dispatch_get_main_queue(), ^{
             [object performSelector:resultMethod];
-            
         });
     });
 }
 
 -(void) runDefaultPriorityTask:(simpleBlock) task withResultMethod:(SEL) resultMethod fromObject:(id) object {
     
-    NSDate *methodStart = [NSDate date];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         task();
         dispatch_async(dispatch_get_main_queue(), ^{
             [object performSelector:resultMethod];
-            NSDate *methodFinish = [NSDate date];
-            NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-            NSLog(@"executionTime = %f", executionTime);
         });
     });
 }
